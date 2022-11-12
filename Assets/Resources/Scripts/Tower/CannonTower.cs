@@ -7,6 +7,8 @@ using UnityEngine;
 
 namespace Towers
 {
+
+
 	public class CannonTower : Tower 
 	{
 		[SerializeField] private Transform _shootPoint;
@@ -14,18 +16,25 @@ namespace Towers
 		[SerializeField] private Transform _barrel;
 
 		[SerializeField] private ProjectileType _projectileType;
+		[SerializeField] private CannonMode _cannonMode;
 		[SerializeField] private float _shootInterval = 0.5f;
 		[SerializeField] private float _speed;
 		[SerializeField] private float _angleSpeed;
 		[SerializeField] private float _angleRange;
 		[SerializeField] private float _attackRadius;
 		[SerializeField] private LayerMask _layerMask;
-
+		
 		private readonly List<ProjectileControlData> _projectiles = new List<ProjectileControlData>();
 		private Vector3 angleVelocity;
 		private ITowerTarget _curTarget;
 		private IProjectileFactory _projectileFactory;
 		private float _lastShotTime = -0.5f;
+
+		private enum CannonMode
+		{
+			Standart,
+			Ballistics 
+		}
 		
 		public override Tower Init(IProjectileFactory projectileFactory)
 		{
@@ -33,16 +42,15 @@ namespace Towers
 			return this;
 		}
 
-		private void Update () 
+		public override void GameUpdate(float deltaTime, float time)
 		{
-			if (TryGetTarget(out _curTarget, _attackRadius, _layerMask) && TryShot(_hub, _curTarget))
-					Shoot(_curTarget);
+			if (TryGetTarget(out _curTarget, _attackRadius, _layerMask) && TryShot(_hub, _curTarget, time))
+					Shoot(_curTarget, time);
 			
-			CalculateAllProjectile(_projectiles, _barrel, _shootPoint);
-			
+			CalculateAllProjectile(_projectiles, _barrel, _shootPoint, deltaTime);
 		}
-
-		private void Shoot(ITowerTarget target)
+		
+		private void Shoot(ITowerTarget target, float time)
 		{
 			var targetPos = target.gameObject.transform.position + target.Velocity.normalized / (_speed / 2) * target.Speed;
 					
@@ -50,29 +58,29 @@ namespace Towers
 			projectile.SetTarget(target.gameObject);
 			_projectiles.Add(new ProjectileControlData(projectile, -1.0f, targetPos));
 			
-			_lastShotTime = Time.time;
+			_lastShotTime = time;
 		}
 		
-		private bool TryShot(Transform hub, ITowerTarget target)
+		private bool TryShot(Transform hub, ITowerTarget target, float time)
 		{
 			Vector3 angle = hub.eulerAngles;
 			Quaternion quaternion = Quaternion.LookRotation(target.gameObject.transform.position - transform.position);
 			angle.y = Mathf.SmoothDampAngle(hub.eulerAngles.y, quaternion.eulerAngles.y, ref angleVelocity.y, _angleSpeed);
 			hub.eulerAngles = angle; 
 			
-			return _lastShotTime + _shootInterval < Time.time 
+			return _lastShotTime + _shootInterval < time
 			       && quaternion.eulerAngles.y > angle.y - _angleRange 
 			       && quaternion.eulerAngles.y < angle.y + _angleRange 
 			       && math.distance(transform.position, target.gameObject.transform.position) < _attackRadius - target.MaxBoundSize;
 		}
 	
-		private void CalculateAllProjectile(IList<ProjectileControlData> projectiles, Transform barrel, Transform shotPos)
+		private void CalculateAllProjectile(IList<ProjectileControlData> projectiles, Transform barrel, Transform shotPos, float deltaTime)
 		{
 			for (int i = 0; i < projectiles.Count; i++)
 			{
 				if (projectiles[i].projectile != null)
 				{
-					projectiles[i].time += Time.deltaTime * _speed;
+					projectiles[i].time += deltaTime * _speed;
 
 					if (projectiles[i].projectile.transform.position.y < projectiles[i].target.y )
 					{
@@ -83,12 +91,32 @@ namespace Towers
 					}
 
 					projectiles[i].projectile.transform.position = 
-						shotPos.position + GetBallistics(barrel, Vector3.zero, 
+						shotPos.position + GetProjectilePos(_cannonMode, barrel, Vector3.zero, 
 							projectiles[i].target - shotPos.position, projectiles[i].time + 1.0f);;
 				}
 			}
 		}
-		
+
+		private Vector3 GetProjectilePos(CannonMode cannonMode, Transform barrel, Vector3 pos, Vector3 endPos, float time)
+		{
+			switch (cannonMode)
+			{
+				case CannonMode.Standart : return GetStandart(barrel, pos, endPos, time);
+				case CannonMode.Ballistics : return GetBallistics(barrel, pos, endPos, time);
+			}
+			
+			return Vector3.zero;
+		}
+
+		private Vector3 GetStandart(Transform barrel, Vector3 pos, Vector3 endPos, float time)
+		{
+			var newPos = Vector3.Lerp(pos, endPos, time);
+			
+			Quaternion quaternion = Quaternion.LookRotation(endPos);
+			barrel.eulerAngles = new Vector3(quaternion.eulerAngles.x, barrel.eulerAngles.y, barrel.eulerAngles.z);
+			
+			return newPos;
+		}
 		private Vector3 GetBallistics(Transform barrel, Vector3 pos, Vector3 endPos, float time)
 		{
 			float3 dir = float3.zero;
@@ -123,7 +151,6 @@ namespace Towers
 			
 			return pos;
 		}
-	
 		
 	}
 }

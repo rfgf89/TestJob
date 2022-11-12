@@ -331,6 +331,7 @@ MonoBehaviour:
   _hub: {fileID: 6356248847684145741}
   _barrel: {fileID: 6356248847684119305}
   _projectileType: 0
+  _cannonMode: 1
   _shootInterval: 0.5
   _speed: 4
   _angleSpeed: 0.1
