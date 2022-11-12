@@ -1,4 +1,6 @@
 ﻿using Game;
+using Game.Config;
+using Game.Monsters;
 using Infrastructure;
 using Towers;
 using UnityEngine;
@@ -9,37 +11,43 @@ public class Bootstrap : MonoBehaviour
     [SerializeField] private GameLoop _gameLoop;
     [SerializeField] private TowerMarker[] _towerMarkers;
     [SerializeField] private Spawner _spawner;
-
-    //Infrastructures 
-    [SerializeField] private GeneralMonsterFactory _monsterFactoryPrefab;
-    [SerializeField] private GeneralProjectileFactory _projectileFactoryPrefab;
-    [SerializeField] private GeneralTowerPartFactory _towerPartFactoryPrefab;
-    [SerializeField] private GeneralCannonPartFactory _cannonPartFactoryPrefab;
-
+    [SerializeField] private MonsterEndPoint _monsterEndPoint;
+    
+    //Infrastructure
+    [SerializeField] private GeneralMonsterScriptableObject _configMonster;
+    [SerializeField] private GeneralProjectileScriptableObject _configProjectile;
+    [SerializeField] private GeneralTowerScriptableObject _configTower;
+    [SerializeField] private GeneralCannonScriptableObject _configCannon;
+    
     private GeneralMonsterFactory _monsterFactory;
     private GeneralProjectileFactory _projectileFactory;
     private GeneralTowerPartFactory _towerPartFactory;
     private GeneralCannonPartFactory _cannonPartFactory;
+
     private void Start()
     {
         //Infrastructures
-        _monsterFactory = Instantiate(_monsterFactoryPrefab, Vector3.zero, Quaternion.identity, null);
-        _projectileFactory = Instantiate(_projectileFactoryPrefab, Vector3.zero, Quaternion.identity, null);
-        _towerPartFactory = Instantiate(_towerPartFactoryPrefab, Vector3.zero, Quaternion.identity, null);
-        _cannonPartFactory = Instantiate(_cannonPartFactoryPrefab, Vector3.zero, Quaternion.identity, null);
+        _monsterFactory = new GeneralMonsterFactory();
+        _projectileFactory = new GeneralProjectileFactory();
+        _towerPartFactory = new GeneralTowerPartFactory();
+        _cannonPartFactory = new GeneralCannonPartFactory();
         
         ///Dependencies
-        _projectileFactory.Init(_gameLoop);
-        _monsterFactory.Init(_gameLoop);
-        _spawner.Init(_monsterFactory).InitLoop(_gameLoop);
-        _towerPartFactory.Init(_gameLoop);
-        _cannonPartFactory.Init(_gameLoop, _projectileFactory);
+        _projectileFactory.Init(_configProjectile, _gameLoop);
+        _monsterFactory.Init(_configMonster, _gameLoop);
+        _towerPartFactory.Init(_configTower);
+        _cannonPartFactory.Init(_configCannon, _gameLoop, _projectileFactory);
+        
+        _monsterEndPoint.Init(_gameLoop);
+        _spawner.Init(_monsterFactory);
         
         //Initialization 
+        _gameLoop.Add(_spawner);
+        
         foreach (var marker in _towerMarkers)
         {
-            var tower = _towerPartFactory.CreatePart(marker, marker.transform.position);
-            _cannonPartFactory.CreatePart(marker, marker.transform.position, tower.transform);
+            var tower = _towerPartFactory.Create(marker, marker.transform.position);;
+            _cannonPartFactory.Create(marker, marker.transform.position, tower.transform);
         }
 
     }

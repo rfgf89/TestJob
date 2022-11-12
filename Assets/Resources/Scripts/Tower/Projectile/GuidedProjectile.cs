@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Towers.Projectiles
 {
-	public class GuidedProjectile : Projectile
+	public class GuidedProjectile : Projectile, IGameUpdate
 	{
 		[SerializeField] private float _speed = 0.2f;
 		[SerializeField] private int _damage = 10;
@@ -13,13 +13,20 @@ namespace Towers.Projectiles
 		private GameObject _target;
 		private bool isDestroy;
 		private float destroyTime;
-
+		private GameLoop _gameLoop;
+		
+		public GuidedProjectile Init(GameLoop gameLoop)
+		{
+			_gameLoop = gameLoop;
+			return this;
+		}
+		
 		private void Start()
 		{
 			destroyTime = _timeLife;
 		}
 
-		public override void GameUpdate(float deltaTime, float time)
+		public void GameUpdate(float deltaTime, float time)
 		{
 			if (_target != null)
 			{
@@ -27,12 +34,18 @@ namespace Towers.Projectiles
 					Vector3.MoveTowards(transform.position, _target.transform.position, _speed * deltaTime);
 
 				if (destroyTime <= 0f)
+				{
+					_gameLoop.Remove(this);
 					Destroy(gameObject);
+				}
 				else
 					destroyTime -= deltaTime;
 			}
 			else
+			{
+				_gameLoop.Remove(this);
 				Destroy(gameObject);
+			}
 		}
 
 		public override void SetTarget(GameObject target)

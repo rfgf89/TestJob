@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Game;
 using Infrastructure;
 using Towers.Enums;
 using Towers.Projectiles;
@@ -7,9 +8,7 @@ using UnityEngine;
 
 namespace Towers
 {
-
-
-	public class CannonTower : Tower 
+	public class CannonTower : Tower, IGameUpdate
 	{
 		[SerializeField] private Transform _shootPoint;
 		[SerializeField] private Transform _hub;
@@ -29,20 +28,20 @@ namespace Towers
 		private ITowerTarget _curTarget;
 		private IProjectileFactory _projectileFactory;
 		private float _lastShotTime = -0.5f;
-
+		private GameLoop _gameLoop;
 		private enum CannonMode
 		{
 			Standart,
 			Ballistics 
 		}
 		
-		public override Tower Init(IProjectileFactory projectileFactory)
+		public void Init(GameLoop gameLoop, IProjectileFactory projectileFactory)
 		{
+			_gameLoop = gameLoop;
 			_projectileFactory = projectileFactory;
-			return this;
 		}
 
-		public override void GameUpdate(float deltaTime, float time)
+		public void GameUpdate(float deltaTime, float time)
 		{
 			if (TryGetTarget(out _curTarget, _attackRadius, _layerMask) && TryShot(_hub, _curTarget, time))
 					Shoot(_curTarget, time);
@@ -84,6 +83,7 @@ namespace Towers
 
 					if (projectiles[i].projectile.transform.position.y < projectiles[i].target.y )
 					{
+						_gameLoop.Remove(projectiles[i].projectile.GetComponent<IGameUpdate>());
 						Destroy(projectiles[i].projectile.gameObject);
 						projectiles.RemoveAt(i);
 						i--;

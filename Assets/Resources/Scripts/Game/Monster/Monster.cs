@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Game.Monsters
 {
 	[RequireComponent(typeof(Collider))]
-	public class Monster : GameBehaviour, ITowerTarget, IDamagable, IDestroyableInEndPoint
+	public class Monster : MonoBehaviour, IGameUpdate, ITowerTarget, IDamagable, IDestroyableInEndPoint
 	{
 		public float MaxBoundSize { get; private set; }
 		public Vector3 Velocity { get; private set; }
@@ -15,7 +15,13 @@ namespace Game.Monsters
 		[SerializeField] private float _speed;
 		private float _hp;
 		private Transform _target;
-
+		private GameLoop _gameLoop;
+		
+		public void Init(GameLoop gameLoop)
+		{
+			_gameLoop = gameLoop;
+		}
+		
 		void Start()
 		{
 			var coll = GetComponent<Collider>();
@@ -24,7 +30,7 @@ namespace Game.Monsters
 			_hp = _maxHp;
 		}
 
-		public override void GameUpdate(float deltaTime, float time)
+		public void GameUpdate(float deltaTime, float time)
 		{
 			if (_target == null)
 				return;
@@ -37,7 +43,10 @@ namespace Game.Monsters
 		{
 			_hp -= damage;
 			if (_hp <= 0f)
+			{
+				_gameLoop.Remove(this);
 				Destroy(gameObject);
+			}
 		}
 
 		public Monster SetTarget(Transform target)

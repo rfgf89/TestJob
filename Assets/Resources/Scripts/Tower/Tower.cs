@@ -4,10 +4,8 @@ using UnityEngine;
 
 namespace Towers
 {
-    public abstract class Tower : GameBehaviour
+    public abstract class Tower : MonoBehaviour
     {
-        public virtual Tower Init(IProjectileFactory projectileFactory) => this;
-
         protected bool TryGetTarget(out ITowerTarget target, float radius, LayerMask layerMask)
         {
             Collider[] targets = Physics.OverlapSphere(transform.position, radius, layerMask);

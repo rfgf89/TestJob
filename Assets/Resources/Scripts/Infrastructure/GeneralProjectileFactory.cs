@@ -1,30 +1,41 @@
 ﻿using Game;
+using Game.Config;
 using Towers.Enums;
 using Towers.Projectiles;
+using Unity.Mathematics;
 using UnityEngine;
 
 namespace Infrastructure
 {
-    public class GeneralProjectileFactory : GameLoopFactory, IProjectileFactory
+    public class GeneralProjectileFactory : IProjectileFactory
     {
-        [SerializeField] private Projectile _common;
-        [SerializeField] private Projectile _guided;
-
-        public void Init(GameLoop gameLoop)
+        private GeneralProjectileScriptableObject _config;
+        
+        private GameLoop _gameLoop;   
+        
+        public void Init(GeneralProjectileScriptableObject config, GameLoop gameLoop)
         {
-            base.Init(gameLoop);
+            _config = config;
+            _gameLoop = gameLoop;
         }
-
+        
         public Projectile Create(ProjectileType projectileType, Vector3 at)
         {
             switch (projectileType)
             {
-                case ProjectileType.Common: return Instance(_common, at);
-                case ProjectileType.Guided: return Instance(_guided, at);
+                case ProjectileType.Common: return Instance(_config.common, at);
+                case ProjectileType.Guided: return Instance(_config.guided, at).Init(_gameLoop);
             }
 
             Debug.LogError($"Not Implementation : {projectileType} for GeneralProjectileFactory");
             return null;
+        }
+
+        private T Instance<T>(T prefab, Vector3 at, Transform parent = null) where T : Component
+        {
+            var projectile = GameObject.Instantiate(prefab, prefab.transform.localPosition + at, Quaternion.identity, parent);
+            _gameLoop.Add(projectile as IGameUpdate);
+            return projectile;
         }
 
     }

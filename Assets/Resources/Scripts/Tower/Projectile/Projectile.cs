@@ -1,9 +1,8 @@
-﻿using Game;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Towers.Projectiles
 {
-    public class Projectile : GameBehaviour
+    public class Projectile : MonoBehaviour
     {
         public virtual void SetTarget(GameObject target)
         { }

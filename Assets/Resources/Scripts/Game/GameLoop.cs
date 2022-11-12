@@ -5,11 +5,10 @@ namespace Game
 {
     public class GameLoop : MonoBehaviour
     {
-        private readonly HashSet<GameBehaviour> _behaviours = new HashSet<GameBehaviour>();
-        private readonly HashSet<GameBehaviour> _behavioursDelete = new HashSet<GameBehaviour>();
-        private readonly HashSet<GameBehaviour> _behavioursAdd = new HashSet<GameBehaviour>();
-        private float _time;
-        private int _indexer;
+        private readonly List<IGameUpdate> _behaviours = new List<IGameUpdate>();
+        private readonly List<IGameUpdate> _behavioursDelete = new List<IGameUpdate>();
+        private readonly List<IGameUpdate> _behavioursAdd = new List<IGameUpdate>();
+
         private void Update()
         {
             foreach (var gameBeh in _behavioursDelete)
@@ -24,14 +23,21 @@ namespace Game
             foreach (var gameBeh in _behaviours)
             {
                 if (gameBeh != null)
-                    gameBeh.GameUpdate(Time.deltaTime, _time);
+                    gameBeh.GameUpdate(Time.deltaTime, Time.time);
             }
-
-            _time += Time.deltaTime;
         }
 
-        public void Add(GameBehaviour gameBehaviour) => _behavioursAdd.Add(gameBehaviour);
-        public void Remove(GameBehaviour gameBeh) => _behavioursDelete.Add(gameBeh);
-        
+        public void Add(IGameUpdate gameBeh)
+        {
+            if(gameBeh!=null)
+                _behavioursAdd.Add(gameBeh);
+        }
+
+        public void Remove(IGameUpdate gameBeh)
+        {
+            if(gameBeh!=null)
+                _behavioursDelete.Add(gameBeh);
+        }
+
     }
 }

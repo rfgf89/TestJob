@@ -5,5 +5,6 @@
         TowerL1,
         TowerL2,
         TowerL3,
+        TowerL4,
     }
 }
