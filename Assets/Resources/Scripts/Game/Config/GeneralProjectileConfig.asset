@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 485baf3d7145467096a1af64851c627a, type: 3}
   m_Name: GeneralProjectileConfig
   m_EditorClassIdentifier: 
-  common: {fileID: 0}
-  guided: {fileID: 0}
+  common: {fileID: 6694297225336093577, guid: 4124357cfe121804f9eea0a690ce3b52, type: 3}
+  guided: {fileID: 11496340, guid: 83b1bef18dd7ed947ae8f4d857327102, type: 3}

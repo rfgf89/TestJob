@@ -1,7 +1,6 @@
 ﻿using Game.Config;
 using Towers;
 using Towers.Enums;
-using Towers.Projectiles;
 using UnityEngine;
 
 namespace Infrastructure
@@ -10,7 +9,7 @@ namespace Infrastructure
     {
         private GeneralTowerScriptableObject _config;
 
-        public void Init(GeneralTowerScriptableObject config)
+        public GeneralTowerPartFactory(GeneralTowerScriptableObject config)
         {
             _config = config;
         }
@@ -29,7 +28,7 @@ namespace Infrastructure
                     return GameObject.Instantiate(_config.towerL4, _config.towerL4.transform.localPosition + at, Quaternion.identity, parent).transform;
             }
 
-            Debug.LogError($"Not Implement : {marker.towerType} for General Tower Part Factory");
+            Debug.LogError($"Not Implement : {marker.towerType} for General TowerWeapon Part Factory");
             return null;
         }
     }

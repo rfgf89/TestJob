@@ -4847,10 +4847,11 @@ MonoBehaviour:
   _hub: {fileID: 411128}
   _barrel: {fileID: 468134}
   _projectileType: 0
+  _cannonMode: 0
   _shootInterval: 0.5
   _speed: 4
   _angleSpeed: 0.1
-  _angleRange: 7
+  _angleRange: 5
   _attackRadius: 15
   _layerMask:
     serializedVersion: 2
@@ -5062,6 +5063,7 @@ MonoBehaviour:
   _hub: {fileID: 0}
   _barrel: {fileID: 0}
   _projectileType: 0
+  _cannonMode: 0
   _shootInterval: 0.5
   _speed: 0
   _angleSpeed: 0

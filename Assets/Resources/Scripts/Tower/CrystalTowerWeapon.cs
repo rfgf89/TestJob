@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Towers
 {
-	public class CrystalTower : Tower, IGameUpdate
+	public class CrystalTowerWeapon : TowerWeapon, IGameUpdate
 	{
 		[SerializeField] private LayerMask _layerMask;
 		[SerializeField] private ProjectileType _projectileType;
@@ -27,7 +27,7 @@ namespace Towers
 			{
 				_projectileFactory
 					.Create(_projectileType, _shotPos.position)
-					.SetTarget(target.gameObject);
+					.Launch(target.transform.gameObject);
 
 				_lastShotTime = time;
 			}

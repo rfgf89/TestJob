@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3388102}
   - component: {fileID: 2331120}
   - component: {fileID: 6453644}
+  - component: {fileID: 6259683002339423650}
   m_Layer: 0
   m_Name: Tower L3
   m_TagString: Untagged
@@ -94,3 +95,15 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: 028296a8d113a924fbc1d9ecd8ce3421, type: 3}
+--- !u!114 &6259683002339423650
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 126824}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b556fc9a27d6ee044ba72181c279a650, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

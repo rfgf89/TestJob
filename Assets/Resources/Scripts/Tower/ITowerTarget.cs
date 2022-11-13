@@ -7,6 +7,6 @@ namespace Towers
         float MaxBoundSize { get; }
         Vector3 Velocity { get; }
         float Speed { get; }
-        GameObject gameObject { get; }
+        Transform transform { get; }
     }
 }

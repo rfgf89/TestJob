@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cc90c5f22f605b4fade237434149e58, type: 3}
   m_Name: GeneralTowerConfig
   m_EditorClassIdentifier: 
-  towerL1: {fileID: 0}
-  towerL2: {fileID: 0}
-  towerL3: {fileID: 0}
+  towerL1: {fileID: -4529012368918642953, guid: 7ac56bab20be57a49b715c98471c1346,
+    type: 3}
+  towerL2: {fileID: 7130954446228680036, guid: 518be93971ce7d8419f580ded9f573ef, type: 3}
+  towerL3: {fileID: 6259683002339423650, guid: adff1ae3360dcb14fb5fbd7774d0ce0d, type: 3}
+  towerL4: {fileID: 6283687610842640074, guid: 573b25c85720ba94dbd059bb6b4d493e, type: 3}

@@ -278,7 +278,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   towerType: 2
-  cannonType: 4
+  cannonType: 5
 --- !u!4 &343219922
 Transform:
   m_ObjectHideFlags: 0
@@ -327,14 +327,11 @@ MonoBehaviour:
   - {fileID: 728163456}
   - {fileID: 343219921}
   _spawner: {fileID: 780892720}
-  _monsterFactoryPrefab: {fileID: 5159602486236436042, guid: f20192e8f09d5ef408089f1bcaae9989,
-    type: 3}
-  _projectileFactoryPrefab: {fileID: 314221553033570943, guid: 23967fdbc8a7e2b498d315a817b6b2e5,
-    type: 3}
-  _towerPartFactoryPrefab: {fileID: 7405903282671804372, guid: ca280ef676a2559448a87490567ac9dc,
-    type: 3}
-  _cannonPartFactoryPrefab: {fileID: 1584410997884240749, guid: bbf374d000cf38448ad086dc031b9f4f,
-    type: 3}
+  _monsterEndPoint: {fileID: 1793304112}
+  _configMonster: {fileID: 11400000, guid: 19041e700e96d294f96b981d9d274028, type: 2}
+  _configProjectile: {fileID: 11400000, guid: f3ffd14f706a1c641b013648161eb33a, type: 2}
+  _configTower: {fileID: 11400000, guid: e1b19087c7493854fbfe2ce29b688718, type: 2}
+  _configCannon: {fileID: 11400000, guid: 6abc7069849fe9043882afd2d3a2f9b4, type: 2}
 --- !u!4 &550988863
 Transform:
   m_ObjectHideFlags: 0

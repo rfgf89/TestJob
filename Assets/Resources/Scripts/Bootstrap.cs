@@ -27,28 +27,27 @@ public class Bootstrap : MonoBehaviour
     private void Start()
     {
         //Infrastructures
-        _monsterFactory = new GeneralMonsterFactory();
-        _projectileFactory = new GeneralProjectileFactory();
-        _towerPartFactory = new GeneralTowerPartFactory();
-        _cannonPartFactory = new GeneralCannonPartFactory();
+        _monsterFactory = new GeneralMonsterFactory(_configMonster, _gameLoop);
+        _projectileFactory = new GeneralProjectileFactory(_configProjectile, _gameLoop);
+        _towerPartFactory = new GeneralTowerPartFactory(_configTower);
+        _cannonPartFactory = new GeneralCannonPartFactory(_configCannon, _gameLoop, _projectileFactory);
         
         ///Dependencies
-        _projectileFactory.Init(_configProjectile, _gameLoop);
-        _monsterFactory.Init(_configMonster, _gameLoop);
-        _towerPartFactory.Init(_configTower);
-        _cannonPartFactory.Init(_configCannon, _gameLoop, _projectileFactory);
-        
         _monsterEndPoint.Init(_gameLoop);
         _spawner.Init(_monsterFactory);
         
         //Initialization 
         _gameLoop.Add(_spawner);
-        
-        foreach (var marker in _towerMarkers)
-        {
-            var tower = _towerPartFactory.Create(marker, marker.transform.position);;
-            _cannonPartFactory.Create(marker, marker.transform.position, tower.transform);
-        }
 
+        CreateAllTower(_towerMarkers, _towerPartFactory, _cannonPartFactory);
+    }
+
+    private void CreateAllTower(TowerMarker[] towerMarkers, GeneralTowerPartFactory towerPartFactory, GeneralCannonPartFactory cannonPartFactory)
+    {
+        foreach (var marker in towerMarkers)
+        {
+            var tower = towerPartFactory.Create(marker, marker.transform.position);;
+            cannonPartFactory.Create(marker, marker.transform.position, tower.transform);
+        }
     }
 }

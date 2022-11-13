@@ -12,9 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6d55bcac9ae43b0a73bdd0b540f16a6, type: 3}
   m_Name: GeneralCannonConfig
   m_EditorClassIdentifier: 
-  crystalL1: {fileID: 0}
-  crystalL2: {fileID: 0}
-  crystalL3: {fileID: 0}
-  cannonL1: {fileID: 0}
-  cannonL2: {fileID: 0}
-  cannonL3: {fileID: 0}
+  crystalL1: {fileID: 8852680134490110716, guid: 0c1e4500d146d8945b7292106fc24cf5,
+    type: 3}
+  crystalL2: {fileID: 1178871394369106051, guid: acc59de7bc5929140b077471cecd758f,
+    type: 3}
+  crystalL3: {fileID: 2208768250527293964, guid: 80409450ace614f4a85ada301ba1223a,
+    type: 3}
+  cannonL1: {fileID: 5199432884349507565, guid: 4c763d9f6102cea4283845384ee33002,
+    type: 3}
+  cannonL2: {fileID: 3485172191552339404, guid: 59e6d8e8602973b448a2f2eddd7afee0,
+    type: 3}
+  cannonL3: {fileID: 8590449859734959407, guid: f324b36bd606bb649a0a1c0923164bcd,
+    type: 3}

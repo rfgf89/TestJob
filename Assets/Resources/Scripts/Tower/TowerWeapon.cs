@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Towers
 {
-    public abstract class Tower : MonoBehaviour
+    public abstract class TowerWeapon : MonoBehaviour
     {
         protected bool TryGetTarget(out ITowerTarget target, float radius, LayerMask layerMask)
         {

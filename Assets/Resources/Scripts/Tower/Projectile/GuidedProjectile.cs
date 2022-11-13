@@ -48,10 +48,11 @@ namespace Towers.Projectiles
 			}
 		}
 
-		public override void SetTarget(GameObject target)
+		public override void Launch(GameObject target, Vector3 velocity, float gravity, Vector3 start)
 		{
 			_target = target;
 		}
+
 
 		private void OnTriggerEnter(Collider other)
 		{

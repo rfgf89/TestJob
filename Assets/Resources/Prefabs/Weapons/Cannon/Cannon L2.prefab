@@ -333,9 +333,10 @@ MonoBehaviour:
   _projectileType: 0
   _cannonMode: 1
   _shootInterval: 0.5
-  _speed: 4
+  _gravity: 9.8
+  _speed: 5
   _angleSpeed: 0.1
-  _angleRange: 7
+  _angleRange: 5
   _attackRadius: 15
   _layerMask:
     serializedVersion: 2

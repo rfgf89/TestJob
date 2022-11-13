@@ -13,7 +13,7 @@ namespace Infrastructure
         
         private GameLoop _gameLoop;   
         
-        public void Init(GeneralProjectileScriptableObject config, GameLoop gameLoop)
+        public GeneralProjectileFactory(GeneralProjectileScriptableObject config, GameLoop gameLoop)
         {
             _config = config;
             _gameLoop = gameLoop;
@@ -23,11 +23,11 @@ namespace Infrastructure
         {
             switch (projectileType)
             {
-                case ProjectileType.Common: return Instance(_config.common, at);
+                case ProjectileType.Common: return Instance(_config.common, at).Init(_gameLoop);
                 case ProjectileType.Guided: return Instance(_config.guided, at).Init(_gameLoop);
             }
 
-            Debug.LogError($"Not Implementation : {projectileType} for GeneralProjectileFactory");
+            Debug.LogError($"Not Implementation : {projectileType} for General Projectile Factory");
             return null;
         }
 

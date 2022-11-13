@@ -12,7 +12,7 @@ namespace Infrastructure
 
         private IProjectileFactory _projectileFactory;
         private GameLoop _gameLoop;
-        public void Init(GeneralCannonScriptableObject config, GameLoop gameLoop, IProjectileFactory projectileFactory)
+        public GeneralCannonPartFactory(GeneralCannonScriptableObject config, GameLoop gameLoop, IProjectileFactory projectileFactory)
         {
             _config = config;
             _gameLoop = gameLoop;
@@ -27,12 +27,12 @@ namespace Infrastructure
                 case CannonType.CrystalL2: Instance(_config.crystalL2,at, parent).Init(_projectileFactory); return;
                 case CannonType.CrystalL3: Instance(_config.crystalL3,at, parent).Init(_projectileFactory); return;
 
-                case CannonType.CannonL1: Instance(_config.cannonL1,at, parent).Init(_gameLoop, _projectileFactory); return;
-                case CannonType.CannonL2: Instance(_config.cannonL2,at, parent).Init(_gameLoop, _projectileFactory); return;
-                case CannonType.CannonL3: Instance(_config.cannonL3,at, parent).Init(_gameLoop, _projectileFactory); return;
+                case CannonType.CannonL1: Instance(_config.cannonL1,at, parent).Init(_projectileFactory); return;
+                case CannonType.CannonL2: Instance(_config.cannonL2,at, parent).Init(_projectileFactory); return;
+                case CannonType.CannonL3: Instance(_config.cannonL3,at, parent).Init(_projectileFactory); return;
             }
 
-            Debug.LogError($"Not Implement : {marker.towerType} for General Tower Part Factory");
+            Debug.LogError($"Not Implement : {marker.towerType} for General Cannon Part Factory");
         }
 
         private T Instance<T>(T prefab, Vector3 at, Transform parent = null) where T : Component

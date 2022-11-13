@@ -11,7 +11,7 @@ namespace Infrastructure
         private GeneralMonsterScriptableObject _config;
         private GameLoop _gameLoop;
         
-        public void Init(GeneralMonsterScriptableObject config, GameLoop gameLoop)
+        public GeneralMonsterFactory(GeneralMonsterScriptableObject config, GameLoop gameLoop)
         {
             _config = config;
             _gameLoop = gameLoop;
@@ -24,7 +24,7 @@ namespace Infrastructure
                 case MonsterType.Monster: return InstanceMonster(_config.monster, at).SetTarget(target);
             }
 
-            Debug.LogError($"Not implementation for {monsterType} from GeneralMonsterFactory");
+            Debug.LogError($"Not implementation for {monsterType} from General Monster Factory");
             return null;
         }
 
@@ -33,7 +33,7 @@ namespace Infrastructure
             var monster = GameObject.Instantiate(monsterPrefab, _config.monster.transform.localPosition + at, Quaternion.identity, null);
             _gameLoop.Add(monster);
             monster.Init(_gameLoop);
-            return monster.GetComponentInChildren<Monster>();
+            return monster;
         }
     }
 }
