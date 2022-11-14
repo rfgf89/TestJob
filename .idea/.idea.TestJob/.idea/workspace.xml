@@ -2,44 +2,23 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bf03a3f5-09b8-4355-9d31-bb3efc21e8d7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Scripts/Game/ScriptableObjects/GeneralTowerWeaponScriptableObject.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Scripts/Infrastructure/GeneralTowerFactory.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/Scripts/Infrastructure/GeneralTowerWeaponFactory.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/StoneTower.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/StoneTower.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Prefabs/Monsters/Monster.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Prefabs/Monsters/Monster.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Prefabs/Projectiles/CannonProjectile.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Prefabs/Projectiles/CannonProjectile.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Prefabs/Towers/Tower L1.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Prefabs/Towers/Tower L1.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Prefabs/Towers/Tower L2.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Prefabs/Towers/Tower L2.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Prefabs/Towers/Tower L3.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Prefabs/Towers/Tower L3.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Prefabs/Towers/Tower L4.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Prefabs/Towers/Tower L4.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Prefabs/Weapons/Cannon/Cannon L1.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Prefabs/Weapons/Cannon/Cannon L1.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Prefabs/Weapons/Cannon/Cannon L2.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Prefabs/Weapons/Cannon/Cannon L2.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Prefabs/Weapons/Cannon/Cannon L3.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Prefabs/Weapons/Cannon/Cannon L3.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Prefabs/Weapons/Crystal/Crystal L1.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Prefabs/Weapons/Crystal/Crystal L1.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Scenes/Start.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Scenes/Start.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Scripts/Bootstrap.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Scripts/Bootstrap.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Scripts/Tower/ILevel.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Scripts/Tower/ILevel.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Scripts/Tower/StoneTower.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Scripts/Tower/Tower.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Resources/Scripts/Game/Monster/Monster.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Scripts/Game/Monster/Monster.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Scripts/Game/ScriptableObjects/GeneralCannonScriptableObject.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Scripts/Game/ScriptableObjects/GeneralCannonScriptableObject.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Scripts/Game/ScriptableObjects/GeneralTowerWeaponScriptableObject.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Resources/Scripts/Game/ScriptableObjects/GeneralTowerScriptableObject.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Scripts/Game/ScriptableObjects/GeneralTowerScriptableObject.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Scripts/Infrastructure/GeneralCannonPartFactory.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Scripts/Infrastructure/GeneralCannonPartFactory.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Scripts/Infrastructure/GeneralTowerWeaponFactory.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Scripts/Infrastructure/GeneralMonsterFactory.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Scripts/Infrastructure/GeneralMonsterFactory.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Resources/Scripts/Infrastructure/GeneralProjectileFactory.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Scripts/Infrastructure/GeneralProjectileFactory.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Scripts/Infrastructure/GeneralTowerPartFactory.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Scripts/Infrastructure/GeneralTowerPartFactory.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Scripts/Infrastructure/GeneralTowerFactory.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Scripts/Tower/CannonTowerWeapon.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Scripts/Tower/CannonTowerWeapon.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Scripts/Tower/CrystalTowerWeapon.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Scripts/Tower/CrystalTowerWeapon.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Scripts/Tower/Enum/CannonType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Scripts/Tower/Enum/CannonType.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Scripts/Tower/Enum/TowerType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Scripts/Tower/Enum/TowerType.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Scripts/Tower/ITowerTarget.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Scripts/Tower/ITowerTarget.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Resources/Scripts/Tower/Projectile/CannonProjectile.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Scripts/Tower/Projectile/CannonProjectile.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Resources/Scripts/Tower/Projectile/GuidedProjectile.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Scripts/Tower/Projectile/GuidedProjectile.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Resources/Scripts/Tower/Projectile/Projectile.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Scripts/Tower/Projectile/Projectile.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Scripts/Tower/TowerMarker.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Scripts/Tower/TowerMarker.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Scripts/Tower/Projectile/ProjectileControlData.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Scripts/Tower/Projectile/ProjectileControlData.cs.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Resources/Scripts/Tower/TowerWeapon.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Scripts/Tower/TowerWeapon.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Tower.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Tower.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/StoneTower.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/StoneTower.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Scripts/Tower/StoneTower.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Tower.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Tower.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Scripts/Tower/Tower.cs.meta" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,7 +28,7 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/377d90b6a60246c8b0fcf7d6e7b8f936568ba0/bc/77c17cfa/Int32.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/b30d92eed5744f9791002a141e880194d2600/07/bfb64348/quaternion.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Tower.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Resources/Scripts/Tower/Tower.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -114,7 +93,7 @@
       <workItem from="1668246639863" duration="11602000" />
       <workItem from="1668266427005" duration="173000" />
       <workItem from="1668311330904" duration="39032000" />
-      <workItem from="1668394744356" duration="7337000" />
+      <workItem from="1668394744356" duration="8197000" />
     </task>
     <servers />
   </component>

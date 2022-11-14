@@ -21,9 +21,4 @@ namespace Towers
             return false;
         }
     }
-
-    public interface ILevel
-    {
-        int Level { get; }
-    }
 }

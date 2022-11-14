@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Game.Config
 {
-    [CreateAssetMenu(fileName = "GeneralTowerConfig", menuName = "GameConfig/General TowerWeapon Config")]
+    [CreateAssetMenu(fileName = "GeneralTowerConfig", menuName = "GameConfig/General Tower Config")]
     public class GeneralTowerScriptableObject : ScriptableObject
     {
         [SerializeField] private StoneTower[] _stoneTowers;

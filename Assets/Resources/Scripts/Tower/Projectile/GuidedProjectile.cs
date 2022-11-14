@@ -55,7 +55,6 @@ namespace Towers.Projectiles
 			_target = target;
 		}
 
-
 		private void OnTriggerEnter(Collider other)
 		{
 			if (!isDestroy)

@@ -48,10 +48,9 @@ namespace Game.Monsters
 			}
 		}
 
-		public Monster SetTarget(Transform target)
+		public void SetTarget(Transform target)
 		{
 			_target = target;
-			return this;
 		}
 	}
 }

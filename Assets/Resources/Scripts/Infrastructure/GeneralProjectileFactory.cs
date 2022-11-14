@@ -2,7 +2,6 @@
 using Game.Config;
 using Towers.Enums;
 using Towers.Projectiles;
-using Unity.Mathematics;
 using UnityEngine;
 
 namespace Infrastructure
