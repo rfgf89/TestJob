@@ -9,8 +9,7 @@ namespace Game.Monsters
 	{
 		public float MaxBoundSize { get; private set; }
 		public Vector3 Velocity { get; private set; }
-		public float Speed => _speed;
-
+		
 		[SerializeField] private float _maxHp;
 		[SerializeField] private float _speed;
 		private float _hp;
@@ -35,8 +34,8 @@ namespace Game.Monsters
 			if (_target == null)
 				return;
 
-			Velocity = (_target.transform.position - transform.position).normalized * _speed * deltaTime;
-			transform.Translate(Velocity);
+			Velocity = (_target.transform.position - transform.position).normalized * _speed;
+			transform.Translate(Velocity * deltaTime);
 		}
 
 		public void Damage(float damage)

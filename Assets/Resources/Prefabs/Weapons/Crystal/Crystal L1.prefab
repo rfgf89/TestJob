@@ -108,11 +108,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebddef33c1146ee4dbee2a0f72098ff1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _crystalLevel: 1
+  _projectileType: 1
+  _shotPos: {fileID: 5796398048908885152}
   _layerMask:
     serializedVersion: 2
     m_Bits: 256
-  _projectileType: 1
-  _shotPos: {fileID: 5796398048908885152}
   _radius: 20
   _shotInterval: 0.5
 --- !u!1 &1794944319971216673

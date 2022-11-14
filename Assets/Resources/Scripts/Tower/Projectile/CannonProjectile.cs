@@ -1,4 +1,5 @@
-﻿using Game;
+﻿using System;
+using Game;
 using UnityEngine;
 
 namespace Towers.Projectiles
@@ -10,14 +11,16 @@ namespace Towers.Projectiles
 		[SerializeField] private float _timeLifeInMonster;
 		[SerializeField] private float _timeLife;
 		
-		private Vector3 _target;
-		private Vector3 _start;
-		private Vector3 _launchVelocity;
+		private Vector3 _start = Vector3.zero;
+		private Vector3 _launchVelocity = Vector3.zero;
 		private float _gravity;
 		private bool isDestroy;
 		private float destroyTime;
 		private float timeFly;
+		private bool isLaunch;
 		private GameLoop _gameLoop;
+		
+		public override float Speed => _speed;
 		
 		public CannonProjectile Init(GameLoop gameLoop)
 		{
@@ -32,30 +35,30 @@ namespace Towers.Projectiles
 
 		public void GameUpdate(float deltaTime, float time)
 		{
-			//transform.position = Vector3.MoveTowards(transform.position, _target, _speed * deltaTime);
+			if (isLaunch)
+			{
+				Vector3 p = _start + _launchVelocity * timeFly;
+				p.y -= 0.5f * _gravity * timeFly * timeFly;
+				transform.localPosition = p;
+				
+				if (destroyTime <= 0f)
+				{
+					_gameLoop.Remove(this);
+					Destroy(gameObject);
+				}
+				else
+					destroyTime -= deltaTime;
 
-			timeFly += Time.deltaTime * _speed;
-			Vector3 p = _start + _launchVelocity * timeFly;
-			p.y -= 0.5f * 6.81f * timeFly * timeFly;
-			transform.localPosition = p;
-			
-			if (destroyTime <= 0f)
-			{
-				_gameLoop.Remove(this);
-				Destroy(gameObject);
+				timeFly += deltaTime * _speed;
 			}
-			else
-			{
-				destroyTime -= deltaTime;
-			}
-			
+
 		}
 		public override void Launch(GameObject target, Vector3 velocity, float gravity, Vector3 start)
 		{
 			_launchVelocity = velocity;
 			_gravity = gravity;
 			_start = start;
-			_target = target.transform.position;
+			isLaunch = true;
 		}
 		
 
@@ -64,11 +67,8 @@ namespace Towers.Projectiles
 			if (!isDestroy)
 			{
 				var dam = other.gameObject.GetComponent<IDamagable>();
-
-				if (dam == null)
-					return;
-
-				dam.Damage(_damage);
+				dam?.Damage(_damage);
+				
 				destroyTime = _timeLifeInMonster;
 				isDestroy = true;
 			}

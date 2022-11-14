@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3375582}
   - component: {fileID: 2359870}
   - component: {fileID: 6458602}
-  - component: {fileID: -4529012368918642953}
+  - component: {fileID: -2082040039470631510}
   m_Layer: 0
   m_Name: Tower L1
   m_TagString: Untagged
@@ -95,7 +95,7 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: 59ac08e41d0791e46a5dc6dba2cd9eff, type: 3}
---- !u!114 &-4529012368918642953
+--- !u!114 &-2082040039470631510
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -104,6 +104,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 113750}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b556fc9a27d6ee044ba72181c279a650, type: 3}
+  m_Script: {fileID: 11500000, guid: 8990d4cb502b4f2b92bde7bc2cafd022, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _levelStoneTower: 1

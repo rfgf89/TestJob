@@ -109,7 +109,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speed: 5
   _damage: 10
-  _timeLifeInMonster: 0.09
+  _timeLifeInMonster: 0
   _timeLife: 5
 --- !u!1001 &4907895431876448675
 PrefabInstance:

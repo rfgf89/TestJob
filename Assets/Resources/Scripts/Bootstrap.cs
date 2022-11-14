@@ -4,6 +4,7 @@ using Game.Monsters;
 using Infrastructure;
 using Towers;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class Bootstrap : MonoBehaviour
 {
@@ -17,20 +18,20 @@ public class Bootstrap : MonoBehaviour
     [SerializeField] private GeneralMonsterScriptableObject _configMonster;
     [SerializeField] private GeneralProjectileScriptableObject _configProjectile;
     [SerializeField] private GeneralTowerScriptableObject _configTower;
-    [SerializeField] private GeneralCannonScriptableObject _configCannon;
+    [FormerlySerializedAs("_configCannon")] [SerializeField] private GeneralTowerWeaponScriptableObject configTowerWeapon;
     
     private GeneralMonsterFactory _monsterFactory;
     private GeneralProjectileFactory _projectileFactory;
-    private GeneralTowerPartFactory _towerPartFactory;
-    private GeneralCannonPartFactory _cannonPartFactory;
+    private GeneralTowerFactory _towerFactory;
+    private GeneralTowerWeaponFactory _towerWeaponFactory;
 
     private void Start()
     {
         //Infrastructures
         _monsterFactory = new GeneralMonsterFactory(_configMonster, _gameLoop);
         _projectileFactory = new GeneralProjectileFactory(_configProjectile, _gameLoop);
-        _towerPartFactory = new GeneralTowerPartFactory(_configTower);
-        _cannonPartFactory = new GeneralCannonPartFactory(_configCannon, _gameLoop, _projectileFactory);
+        _towerFactory = new GeneralTowerFactory(_configTower);
+        _towerWeaponFactory = new GeneralTowerWeaponFactory(configTowerWeapon, _gameLoop, _projectileFactory);
         
         ///Dependencies
         _monsterEndPoint.Init(_gameLoop);
@@ -39,15 +40,15 @@ public class Bootstrap : MonoBehaviour
         //Initialization 
         _gameLoop.Add(_spawner);
 
-        CreateAllTower(_towerMarkers, _towerPartFactory, _cannonPartFactory);
+        CreateAllTower(_towerMarkers, _towerFactory, _towerWeaponFactory);
     }
 
-    private void CreateAllTower(TowerMarker[] towerMarkers, GeneralTowerPartFactory towerPartFactory, GeneralCannonPartFactory cannonPartFactory)
+    private void CreateAllTower(TowerMarker[] towerMarkers, GeneralTowerFactory towerFactory, GeneralTowerWeaponFactory towerWeaponFactory)
     {
         foreach (var marker in towerMarkers)
         {
-            var tower = towerPartFactory.Create(marker, marker.transform.position);;
-            cannonPartFactory.Create(marker, marker.transform.position, tower.transform);
+            var tower = towerFactory.Create(marker, marker.transform.position);;
+            towerWeaponFactory.Create(marker, marker.transform.position, tower.transform);
         }
     }
 }

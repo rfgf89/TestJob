@@ -7,15 +7,19 @@ namespace Towers
 {
 	public class CrystalTowerWeapon : TowerWeapon, IGameUpdate
 	{
-		[SerializeField] private LayerMask _layerMask;
+		[SerializeField] private int _crystalLevel;
+		
 		[SerializeField] private ProjectileType _projectileType;
 		[SerializeField] private Transform _shotPos;
-
+		[SerializeField] private LayerMask _layerMask;
+		
 		[SerializeField] private float _radius = 4f;
 		[SerializeField] private float _shotInterval = 0.5f;
 
 		private float _lastShotTime = -0.5f;
 		private IProjectileFactory _projectileFactory;
+		public override int Level => _crystalLevel;
+
 		public void Init(IProjectileFactory projectileFactory)
 		{
 			_projectileFactory = projectileFactory;

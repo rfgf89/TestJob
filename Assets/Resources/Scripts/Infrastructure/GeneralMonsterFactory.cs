@@ -8,8 +8,8 @@ namespace Infrastructure
 {
     public class GeneralMonsterFactory
     {
-        private GeneralMonsterScriptableObject _config;
-        private GameLoop _gameLoop;
+        private readonly GeneralMonsterScriptableObject _config;
+        private readonly GameLoop _gameLoop;
         
         public GeneralMonsterFactory(GeneralMonsterScriptableObject config, GameLoop gameLoop)
         {
@@ -17,15 +17,14 @@ namespace Infrastructure
             _gameLoop = gameLoop;
         }
         
-        public Monster Create(MonsterType monsterType, Transform target, Vector3 at)
+        public void Create(MonsterType monsterType, Transform target, Vector3 at)
         {
             switch (monsterType)
             {
-                case MonsterType.Monster: return InstanceMonster(_config.monster, at).SetTarget(target);
+                case MonsterType.Monster: InstanceMonster(_config.monster, at).SetTarget(target); return;
             }
 
             Debug.LogError($"Not implementation for {monsterType} from General Monster Factory");
-            return null;
         }
 
         private Monster InstanceMonster(Monster monsterPrefab, Vector3 at)

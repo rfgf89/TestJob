@@ -330,14 +330,14 @@ MonoBehaviour:
   _shootPoint: {fileID: 5003853775836916966}
   _hub: {fileID: 6356248847684145741}
   _barrel: {fileID: 6356248847684119305}
+  _cannonLevel: 2
   _projectileType: 0
-  _cannonMode: 1
+  _ballistics: 1
   _shootInterval: 0.5
   _gravity: 9.8
-  _speed: 5
   _angleSpeed: 0.1
   _angleRange: 5
-  _attackRadius: 15
+  _attackRadius: 105
   _layerMask:
     serializedVersion: 2
     m_Bits: 256

@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using Game;
+﻿using Game;
 using Infrastructure;
-using TMPro;
 using Towers.Enums;
 using Towers.Projectiles;
 using Unity.Mathematics;
@@ -16,11 +13,12 @@ namespace Towers
 		[SerializeField] private Transform _hub;
 		[SerializeField] private Transform _barrel;
 
+		[SerializeField, Min(1)] private int _cannonLevel; 
+		
 		[SerializeField] private ProjectileType _projectileType;
-		[SerializeField] private CannonMode _cannonMode;
+		[SerializeField] private bool _ballistics;
 		[SerializeField] private float _shootInterval = 0.5f;
 		[SerializeField, Range(0.1f, 9.8f)] private float _gravity = 9.80f;
-		[SerializeField] private float _speed;
 		[SerializeField] private float _angleSpeed;
 		[SerializeField] private float _angleRange;
 		[SerializeField] private float _attackRadius;
@@ -29,14 +27,10 @@ namespace Towers
 		private Vector3 angleVelocity;
 		private ITowerTarget _curTarget;
 		private IProjectileFactory _projectileFactory;
+		private Projectile _curProjectile;
 		private float _lastShotTime = -0.5f;
-		private Quaternion _angleToMonster;
-		private enum CannonMode
-		{
-			Standart,
-			Ballistics 
-		}
-		//+ target.Velocity.normalized / (_speed / 2) * target.Speed
+		public override int Level => _cannonLevel;
+
 		public void Init(IProjectileFactory projectileFactory)
 		{
 			_projectileFactory = projectileFactory;
@@ -44,108 +38,118 @@ namespace Towers
 
 		public void GameUpdate(float deltaTime, float time)
 		{
-			if (TryGetTarget(out _curTarget, _attackRadius, _layerMask) && TryShot(_hub, _curTarget, time))
-				ShootBallistics(_curTarget, time);
+			if (_curProjectile == null)
+				_curProjectile = _projectileFactory.Create(_projectileType, transform.position + Vector3.up * 1000f);
 			
+			if (TryGetTarget(out _curTarget, _attackRadius, _layerMask))
+			{
+				if (_ballistics)
+				{
+					var posPredict = PredictBallistics(_curTarget);
+					DampAngle(_hub, posPredict - _shootPoint.position, out var angleFrom, out var angleTo);
+					if (TryShot(_curTarget, angleFrom, angleTo, time))
+					{
+						LaunchBallistics(_barrel, _shootPoint.position, posPredict, 0f, true);
+						_lastShotTime = time;
+					}
+				}
+				else
+				{
+					var posPredict = Predict(_curTarget);
+					DampAngle(_hub, posPredict - _shootPoint.position, out var angleFrom, out var angleTo);
+					if (TryShot(_curTarget, angleFrom, angleTo, time))
+					{
+						Launch(_curTarget, posPredict);
+						_lastShotTime = time;
+					}
+				}
+			}
 		}
 
-		private Vector3 dd;
-		private void ShootBallistics(ITowerTarget target, float time)
+		private void Launch(ITowerTarget target, Vector3 targetPos)
 		{
-			var targetPos = (target.transform.position - _shootPoint.position) + target.Velocity.normalized / (_speed / 2) * target.Speed;
-			var bas = LaunchBallistics(_barrel, Vector3.zero, targetPos, 2, false);
-			
-			dd =_shootPoint.position + bas;
-			LaunchBallistics(_barrel, _shootPoint.position, dd, 0f, true);
-			
-			_lastShotTime = time;
+			var an = Quaternion.LookRotation(targetPos - _shootPoint.position);
+			_barrel.eulerAngles = new Vector3(an.eulerAngles.x, _barrel.eulerAngles.y, _barrel.eulerAngles.z);
+
+			if (_curProjectile != null)
+			{
+				_curProjectile.Launch(_curTarget.transform.gameObject, _barrel.forward * 10f, 0f, _shootPoint.position);
+				_curProjectile = null;
+			}
+		}
+
+		private Vector3 Predict(ITowerTarget target)
+		{
+			return target.transform.position + target.Velocity.normalized
+				* (target.transform.position + target.Velocity
+				   - _shootPoint.position).magnitude / (_curProjectile.Speed * 10f) * target.Velocity.magnitude;
+		}
+
+		private Vector3 PredictBallistics(ITowerTarget target)
+		{
+			return target.transform.position + target.Velocity.normalized
+				* (target.transform.position + target.Velocity
+				   - _shootPoint.position).magnitude / (
+					LaunchBallistics(_barrel, _shootPoint.position, target.transform.position, 2f, false)
+					* _curProjectile.Speed * (_gravity / 9.8f * 0.7f)) * target.Velocity.magnitude;
 		}
 		
-		private void Shoot(ITowerTarget target, float time)
+		private bool TryShot(ITowerTarget target, Vector3 angleFrom, Vector3 angleTo, float time)
 		{
-			var targetPos = (target.transform.position - _shootPoint.position) + target.Velocity.normalized / (_speed / 2) * target.Speed;
-			var bas = LaunchBallistics(_barrel, Vector3.zero, targetPos, 2, false);
-			
-			dd =_shootPoint.position + bas;
-			LaunchBallistics(_barrel, _shootPoint.position, dd, 0f, true);
-			
-			_lastShotTime = time;
-		}
-		
-		private bool TryShot(Transform hub, ITowerTarget target, float time)
-		{
-			Vector3 angle = hub.eulerAngles;
-			_angleToMonster = Quaternion.LookRotation(
-				(target.transform.position)-_shootPoint.position + target.Velocity.normalized / (_speed / 2) * target.Speed);
-			angle.y = Mathf.SmoothDampAngle(hub.eulerAngles.y, _angleToMonster.eulerAngles.y, ref angleVelocity.y, _angleSpeed);
-			hub.eulerAngles = angle; 
-			
 			return _lastShotTime + _shootInterval < time
-			       && _angleToMonster.eulerAngles.y > angle.y - _angleRange 
-			       && _angleToMonster.eulerAngles.y < angle.y + _angleRange 
+			       && angleTo.y > angleFrom.y - _angleRange 
+			       && angleTo.y < angleFrom.y + _angleRange 
 			       && math.distance(transform.position, target.transform.position) < _attackRadius - target.MaxBoundSize;
 		}
-		
-		
-		private Vector3 Launch(Transform barrel, Vector3 pos, Vector3 endPos, float time)
-		{
-			var newPos = pos + endPos * time;
-			
-			var projectile = _projectileFactory.Create(_projectileType, pos);
-			projectile.Launch(_curTarget.transform.gameObject,barrel.forward, 0f, pos);
-			
-			Vector3 an = Quaternion.LookRotation(endPos) * Vector3.up;
-			barrel.eulerAngles = new Vector3(an.x, barrel.eulerAngles.y, barrel.eulerAngles.z);
 
-			return newPos;
-		}
-		
-		private Vector3 LaunchBallistics(Transform barrel, Vector3 pos, Vector3 endPos, float time, bool launch)
+		private void DampAngle(Transform hub, Vector3 targetPos, out Vector3 angleFrom, out Vector3 angleTo)
 		{
+			Vector3 angle = hub.eulerAngles;
+			var angleQ = Quaternion.LookRotation(targetPos);
+			angle.y = Mathf.SmoothDampAngle(hub.eulerAngles.y, angleQ.eulerAngles.y, ref angleVelocity.y, _angleSpeed);
+			hub.eulerAngles = angle;
+			
+			angleFrom = angle;
+			angleTo = angleQ.eulerAngles;
+		}
+		private float LaunchBallistics(Transform barrel, Vector3 pos, Vector3 endPos, float time, bool launch)
+		{
+			
 			float3 dir = float3.zero;
+
 			dir.x = endPos.z - pos.z;
 			dir.y = endPos.y - pos.y;
 			dir.z = endPos.x - pos.x;
 		
 			var x = math.length(dir.xyz);
-			var y = 0;
+			var y = - pos.y;
 			dir /= x;
 		
 			var g = _gravity;
-			float x1 = x + 0.25f;
+			float x1 = x + 0.01f;
 			var s = Mathf.Sqrt((y + Mathf.Sqrt(x1 * x1 + y * y)) * 9.81f);
 			var s2 = s * s;
 		
 			var r = s2 * s2 - g * (g * x * x + 2f * y * s2);
 			if (r <= 0f)
-				return pos;
+				return s;
 			
 			var tanTheta = (s2 + Mathf.Sqrt(r)) / (g * x);
 			var cosTheta = Mathf.Cos(Mathf.Atan(tanTheta));
 			var sinTheta = cosTheta * tanTheta;
 			
-			if (launch)
+			if (launch && _curProjectile != null)
 			{
-				var projectile = _projectileFactory.Create(_projectileType, pos);
-				projectile.Launch(_curTarget.transform.gameObject,
+				_curProjectile.Launch(_curTarget.transform.gameObject,
 					new Vector3(s * cosTheta * dir.z, s * sinTheta, s * cosTheta * dir.x), g, pos);
+				_curProjectile = null;
 			}
 			
-			pos.x = dir.z * cosTheta * s * time;
-			pos.z = dir.x * cosTheta * s * time;
-			pos.y = -dir.y * (sinTheta * s * time - 0.5f * g * time * time);
-			
-			Quaternion quaternion = Quaternion.LookRotation(new Vector3(dir.z, tanTheta * 0.5f, dir.x));
+			Quaternion quaternion = Quaternion.LookRotation(new Vector3(dir.z, tanTheta, dir.x));
 			barrel.eulerAngles = new Vector3(quaternion.eulerAngles.x, barrel.eulerAngles.y, barrel.eulerAngles.z);
 			
-			return pos;
+			return s;
 		}
 		
-
-		private void OnDrawGizmos()
-		{
-			Gizmos.color = Color.green;
-			Gizmos.DrawSphere(dd, 0.5f);
-		}
 	}
 }

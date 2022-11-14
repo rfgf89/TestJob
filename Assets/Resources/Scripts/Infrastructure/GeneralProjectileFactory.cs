@@ -9,9 +9,9 @@ namespace Infrastructure
 {
     public class GeneralProjectileFactory : IProjectileFactory
     {
-        private GeneralProjectileScriptableObject _config;
+        private readonly GeneralProjectileScriptableObject _config;
         
-        private GameLoop _gameLoop;   
+        private readonly GameLoop _gameLoop;   
         
         public GeneralProjectileFactory(GeneralProjectileScriptableObject config, GameLoop gameLoop)
         {

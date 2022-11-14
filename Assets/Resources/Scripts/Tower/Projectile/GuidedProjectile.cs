@@ -14,7 +14,9 @@ namespace Towers.Projectiles
 		private bool isDestroy;
 		private float destroyTime;
 		private GameLoop _gameLoop;
-		
+
+		public override float Speed => _speed;
+
 		public GuidedProjectile Init(GameLoop gameLoop)
 		{
 			_gameLoop = gameLoop;
